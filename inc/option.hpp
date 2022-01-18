@@ -40,6 +40,16 @@ public:
   }
 
   /**
+   * Class method alias for casting the
+   * option to an error.
+   * See overloaded error cast operator
+   * for more info.
+   */
+  constexpr error err() const {
+    return static_cast<error>(*this);
+  }
+
+  /**
    * Cast operator for converting the option
    * into the desireable value. If there was no
    * actual value inside the option, the
@@ -57,6 +67,16 @@ public:
     assert(ptr);
 
     return *ptr;
+  }
+
+  /**
+   * Class method alias for casting the
+   * option to the desireable value.
+   * See overloaded value cast operator
+   * for more info.
+   */
+  constexpr T val() const {
+    return static_cast<T>(*this);
   }
 
   /**
