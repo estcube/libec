@@ -10,7 +10,7 @@ namespace ec {
 template<typename T = uint8_t>
 class option {
 protected:
-  const std::variant<T, error> var;
+  const std::variant<T, ec::error> var;
 
 public:
   /**
@@ -23,15 +23,15 @@ public:
    * Constructor for storing an error
    * inside the option.
    */
-  constexpr option(error err) : var(err) {}
+  constexpr option(ec::error err) : var(err) {}
 
   /**
    * Cast operator for converting the option
    * to an error. If there was no error
    * stored in the option, OK is returned.
    */
-  operator error() const {
-    const auto ptr = std::get_if<error>(&this->var);
+  operator ec::error() const {
+    const auto ptr = std::get_if<ec::error>(&this->var);
 
     if (ptr == nullptr) [[likely]]
       return error::ok();
@@ -45,8 +45,8 @@ public:
    * See overloaded error cast operator
    * for more info.
    */
-  constexpr error err() const {
-    return static_cast<error>(*this);
+  constexpr ec::error error() const {
+    return static_cast<ec::error>(*this);
   }
 
   /**
@@ -75,7 +75,7 @@ public:
    * See overloaded value cast operator
    * for more info.
    */
-  constexpr T val() const {
+  constexpr T value() const {
     return static_cast<T>(*this);
   }
 
@@ -85,7 +85,7 @@ public:
    * an error inside, otherwise returns false.
    */
   operator bool() const {
-    const auto ptr = std::get_if<error>(&this->var);
+    const auto ptr = std::get_if<ec::error>(&this->var);
 
     return ptr != nullptr;
   }
