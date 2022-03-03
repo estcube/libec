@@ -7,8 +7,8 @@ namespace ec {
 
 class error {
 public:
-  const uint8_t code;
-  const uint32_t argument : 24;
+  uint8_t code;
+  uint32_t argument : 24;
 
   /**
    * Default constructor.
@@ -80,9 +80,7 @@ public:
   /**
    * Assignment operator for ec::error
    */
-  constexpr const error operator =(const error &other) const {
-    return error(other);
-  }
+  error& operator =(const error &other) = default;
 
   /**
    * Comparison operator for ec::error
