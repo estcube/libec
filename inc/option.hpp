@@ -51,32 +51,35 @@ public:
 
   /**
    * Cast operator for converting the option
-   * into the desireable value. If there was no
-   * actual value inside the option, the
-   * assert fails and the program should exit.
+   * into the desired value.
    *
-   * Do not use this cast if not sure about
+   * This cast is for better ease of use and
+   * directly uses the value method of the
+   * option.
+   */
+  operator T() const {
+    return value();
+  }
+
+  /**
+   * Class method alias for casting the
+   * option to the desireable value. If
+   * there was no actual value inside the
+   * option, the assert fails and the program
+   * should exit.
+   *
+   * Do not use this if not sure about
    * what is in the option. Before using this
-   * cast, one has to always check if there
+   * method, one has to always check if there
    * is an error in the option istead with
    * (ec::error) cast operator.
    */
-  operator T() const {
+  constexpr T value() const {
     const auto ptr = std::get_if<T>(&this->var);
 
     assert(ptr);
 
     return *ptr;
-  }
-
-  /**
-   * Class method alias for casting the
-   * option to the desireable value.
-   * See overloaded value cast operator
-   * for more info.
-   */
-  constexpr T value() const {
-    return static_cast<T>(*this);
   }
 
   /**
