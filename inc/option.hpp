@@ -50,18 +50,6 @@ public:
   }
 
   /**
-   * Cast operator for converting the option
-   * into the desired value.
-   *
-   * This cast is for better ease of use and
-   * directly uses the value method of the
-   * option.
-   */
-  operator T() const {
-    return value();
-  }
-
-  /**
    * Class method alias for casting the
    * option to the desireable value. If
    * there was no actual value inside the
