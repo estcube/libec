@@ -2,15 +2,19 @@
 
 #include <variant>
 #include <cassert>
+#include <type_traits>
 
 #include "error.hpp"
 
 namespace ec {
 
-template<typename T = uint8_t>
+template<
+  typename T,
+  typename = std::enable_if_t<std::is_copy_constructible_v<T> && std::is_copy_assignable_v<T>, void>
+>
 class option {
 protected:
-  const std::variant<T, ec::error> var;
+  std::variant<T, ec::error> var;
 
 public:
   /**
@@ -79,6 +83,15 @@ public:
     const auto ptr = std::get_if<ec::error>(&this->var);
 
     return ptr != nullptr;
+  }
+
+  option<T> &operator=(const option<T> &other) {
+    if (this == &other) {
+      return *this;
+    }
+
+    this->var = other.var;
+    return *this;
   }
 };
 
