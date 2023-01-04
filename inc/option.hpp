@@ -85,6 +85,9 @@ public:
     return ptr != nullptr;
   }
 
+  /**
+   * Assignment operator
+   */
   option<T> &operator=(const option<T> &other) {
     if (this == &other) {
       return *this;
@@ -93,6 +96,12 @@ public:
     this->var = other.var;
     return *this;
   }
+
+  /**
+   * Copy constructor
+   */
+  option(const option<T> &other) : var(other.var) {}
+
 };
 
 } // namespace ec
